@@ -1,0 +1,39 @@
+iport java.util.Scanner;
+import java.util.ArrayList;
+public class Solution {
+
+   public boolean isHappy(int n) {
+        ArrayList<Integer> al=new ArrayList<Integer>();
+        al.add(n);
+        int t=n;
+        int s=0;
+        while(t!=0){
+            int d=t%10;
+            s=s+d*d;
+            t=t/10;
+            if(t==0){
+                if(s==1)
+                    break;
+                else if(al.contains(s))
+                    return false;
+                else{
+                    t=s;
+                s=0;
+                al.add(t);}
+            }
+        }
+        return true;
+    }
+   
+
+  public static void main(String[] args) {
+      Scanner sc=new Scanner(System.in);
+      int n=sc.nextInt();
+      Solution obj=new Solution();
+      if(obj.isHappy(n))
+      System.out.println("True");
+      else
+       System.out.println("False");
+    }
+}
+
