@@ -1,0 +1,66 @@
+//Doubly Linked List and HAshmap Implementation together
+
+class FirstUnique {
+    //LRUCacheLogic
+    class Node{
+    
+    int val;
+    Node prev;
+    Node next;
+ 
+    public Node(int val){
+        this.val=val;
+    }
+}
+    HashMap<Integer,Integer> hashma = new HashMap<>();
+    Node head;
+    Node tail;
+    public FirstUnique(int[] nums) {
+        head = new Node(0);
+        tail=new Node(0);
+        head.next=tail;
+        tail.prev=head;
+        for(int i=0;i<nums.length;i++){
+            if(hashma.containsKey(nums[i]))
+                hashma.put(nums[i],hashma.get(nums[i])+1);
+            else
+                hashma.put(nums[i],1);
+        }
+        
+        for(int i=0;i<nums.length;i++){
+            if(hashma.get(nums[i])==1)
+                insert(new Node(nums[i]));
+        }
+    }
+    
+    public int showFirstUnique() {
+        while(hashma.containsKey(head.next.val) &&hashma.get(head.next.val)>1)
+            remove(head.next);
+        
+        if(hashma.containsKey(head.next.val)){
+            return head.next.val;
+        }
+        return -1;
+    }
+    
+    public void add(int value) {
+        if(hashma.containsKey(value))
+            hashma.put(value,hashma.get(value)+1);
+        
+        else{
+            hashma.put(value,1);
+            insert(new Node(value));
+        }
+    }
+    
+    public void insert(Node node){
+        tail.prev.next=node;
+        node.prev=tail.prev;
+        node.next=tail;
+        tail.prev=node;
+    }
+    public void remove(Node node){
+        node.prev.next=node.next;
+        node.next.prev=node.prev;
+    }
+}
